@@ -24,10 +24,6 @@ reducing repetitive manual tasks. Choose the features that suit your table.
 | [Session Hero Point Resets](docs/guides/session-hero-points.md) | Gives included party characters their configured starting points after explicit GM confirmation, with optional Hero Action card discarding. |
 | [Token Movement History](docs/guides/token-movement-history.md) | Adds left-side combat Token HUD controls to reset recorded distance or immediately undo the entire recorded movement. |
 
-![Save Playing Tracks button highlighted beside Create Playlist and Create Folder](assets/readme/playlist-creation.png)
-
-*Save Playing Tracks, highlighted at the top of the Playlists sidebar.*
-
 ## Requirements and Compatibility
 
 - **Required:** Foundry VTT generation 14 and the Pathfinder 2e system. No other module

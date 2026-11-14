@@ -4,6 +4,11 @@ A modular collection of lightweight quality-of-life improvements for Pathfinder 
 on Foundry VTT. Patchwork focuses on convenience, interface customization, and
 reducing repetitive manual tasks. Choose the features that suit your table.
 
+[![Latest Release](https://img.shields.io/github/v/release/SoundSherpa/pf2e-patchwork?style=flat&label=Latest%20Release)](https://github.com/SoundSherpa/pf2e-patchwork/releases/latest)
+[![Foundry VTT](https://img.shields.io/badge/Foundry-v14-orange?style=flat)](https://foundryvtt.com/)
+[![Pathfinder 2e](https://img.shields.io/badge/System-PF2e-blueviolet?style=flat)](https://foundryvtt.com/packages/pf2e/)
+[![MIT License](https://img.shields.io/github/license/SoundSherpa/pf2e-patchwork?style=flat)](https://github.com/SoundSherpa/pf2e-patchwork/blob/main/LICENSE)
+
 [Features](#features) · [Requirements](#requirements-and-compatibility) ·
 [Installation](#installation) · [Configuration](#configuration) ·
 [Documentation](#documentation) · [Support](#support-and-issues) ·

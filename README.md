@@ -102,11 +102,6 @@ PF2e Patchwork is developed with assistance from AI tools, including ChatGPT and
 OpenAI Codex. These tools help with development planning, code implementation,
 debugging, and automated testing.
 
-The project's features, priorities, and design decisions are directed by the
-maintainer. Changes are tested and evaluated before release, and responsibility
-for the functionality, quality, and ongoing maintenance of Patchwork remains with
-the maintainer.
-
 AI assistance is part of the development process, not a substitute for testing,
 review, or accountability. See the official [Foundry AI Content Policy](https://foundryvtt.com/article/ai-policy/).
 

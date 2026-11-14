@@ -6,7 +6,8 @@ reducing repetitive manual tasks. Choose the features that suit your table.
 
 [Features](#features) · [Requirements](#requirements-and-compatibility) ·
 [Installation](#installation) · [Configuration](#configuration) ·
-[Documentation](#documentation) · [Support](#support-and-issues)
+[Documentation](#documentation) · [Support](#support-and-issues) ·
+[AI Use](#ai-assisted-development) · [License](#license)
 
 ## Features
 

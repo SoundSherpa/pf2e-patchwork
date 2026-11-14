@@ -1,0 +1,125 @@
+name: Publish approved stable release
+
+on:
+  workflow_dispatch:
+    inputs:
+      publish_release:
+        description: Owner approved publication of the exact public SHA, version and notes
+        type: boolean
+        required: true
+        default: false
+      approved_commit:
+        description: Full approved public main commit SHA
+        type: string
+        required: true
+      approved_version:
+        description: Exact approved stable version
+        type: string
+        required: true
+      approved_notes_sha256:
+        description: SHA-256 of the versioned changelog section, trimmed plus one final newline
+        type: string
+        required: true
+
+permissions:
+  contents: read
+
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+
+concurrency:
+  group: stable-publication
+  cancel-in-progress: false
+
+jobs:
+  approval:
+    if: github.actor == 'SoundSherpa' && github.repository_id == '1457423459' && github.ref == 'refs/heads/main' && inputs.publish_release
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Require stable repository identity
+        env:
+          REPOSITORY_ID: ${{ github.repository_id }}
+          SOURCE_REF: ${{ github.ref }}
+        run: |
+          test "$REPOSITORY_ID" = "1457423459"
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          fetch-depth: 1
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+      - name: Validate exact source, version, notes and public identity approval
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b
+        with:
+          retries: 0
+          script: |
+            const { releasePlan, validateRemote } = await import(`${process.env.GITHUB_WORKSPACE}/tools/publish_release.mjs`);
+            releasePlan({context});
+            await validateRemote({github, context});
+
+  build:
+    needs: approval
+    if: github.actor == 'SoundSherpa' && github.repository_id == '1457423459' && github.ref == 'refs/heads/main' && inputs.publish_release
+    permissions:
+      contents: read
+    uses: ./.github/workflows/build-stable.yml
+
+  publish:
+    needs: build
+    if: github.actor == 'SoundSherpa' && github.repository_id == '1457423459' && github.ref == 'refs/heads/main' && inputs.publish_release
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: stable-release
+    permissions:
+      contents: write
+    steps:
+      - name: Require stable repository identity
+        env:
+          REPOSITORY_ID: ${{ github.repository_id }}
+          SOURCE_REF: ${{ github.ref }}
+        run: |
+          test "$REPOSITORY_ID" = "1457423459"
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          fetch-depth: 1
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+      - name: Download this run's exact validated artifact ID
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          artifact-ids: ${{ needs.build.outputs.artifact_id }}
+          path: dist/release
+          merge-multiple: true
+      - name: Revalidate downloaded artifact against approved checkout
+        run: |
+          python -B - <<'PYTHON'
+          import json
+          from pathlib import Path
+          from tools.package_release import collect_files, validate_archive
+          version=json.loads(Path('module.json').read_text())['version']
+          validate_archive(Path('dist/release')/f'pf2e-patchwork-qol-v{version}.zip',collect_files(Path.cwd()),version)
+          assert Path('dist/release/module.json').read_bytes()==Path('module.json').read_bytes()
+          PYTHON
+          cd dist/release
+          sha256sum --check *.zip.sha256
+      - name: Upload draft assets, read back bytes, then publish
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b
+        with:
+          retries: 0
+          script: |
+            const { publishRelease } = await import(`${process.env.GITHUB_WORKSPACE}/tools/publish_release.mjs`);
+            const result = await publishRelease({github, context});
+            await core.summary.addLink('Verified stable release', result.url)
+              .addRaw(`\n\nPublic source: ${result.commit}\n\nZIP SHA-256: ${result.sha256}\n`).write();

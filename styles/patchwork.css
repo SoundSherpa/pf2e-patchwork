@@ -1,0 +1,215 @@
+/* Position only the native GamePause figure. Default has no matching rules.
+   Keep native display/visibility, animation, transforms, children and theme. */
+#pause[data-patchwork-pause-position] {
+  position: fixed;
+  left: var(--patchwork-pause-left);
+  right: var(--patchwork-pause-right);
+  top: var(--patchwork-pause-top);
+  bottom: auto;
+  width: auto;
+  margin: 0;
+}
+
+/* Only the observed input toolbar and its explicitly marked controls. Never the
+   editor menu, message cards, sidebar tabs, Dice Tray or adjacent module widgets. */
+#chat-controls[data-patchwork-chat-toolbar] {
+  --patchwork-chat-target: max(28px, calc(var(--patchwork-chat-icon-size) + 12px));
+  flex-wrap: wrap;
+  gap: var(--patchwork-chat-spacing);
+}
+#chat-controls[data-patchwork-chat-toolbar] > [data-patchwork-chat-group] {
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  flex-wrap: wrap;
+  gap: var(--patchwork-chat-spacing);
+}
+#chat-controls[data-patchwork-chat-toolbar] [data-patchwork-chat-control="icon"] {
+  flex: 0 0 var(--patchwork-chat-target);
+  width: var(--patchwork-chat-target);
+  min-width: var(--patchwork-chat-target);
+  height: var(--patchwork-chat-target);
+  min-height: var(--patchwork-chat-target);
+  padding: 0;
+  margin: 0;
+  font-size: var(--patchwork-chat-icon-size);
+  line-height: 1;
+}
+#chat-controls[data-patchwork-chat-toolbar] [data-patchwork-chat-control="label"] {
+  flex: 0 1 auto;
+  min-width: var(--patchwork-chat-target);
+  min-height: var(--patchwork-chat-target);
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+#chat-controls[data-patchwork-chat-toolbar] [data-patchwork-chat-icon] {
+  font-size: var(--patchwork-chat-icon-size);
+  line-height: 1;
+}
+
+header.directory-header .header-actions > button[data-patchwork="save-playing-tracks"] {
+  flex: 0 0 32px;
+  width: 32px;
+  min-width: 32px;
+  padding: 0;
+}
+.patchwork-playlist-curation { max-width: calc(100vw - 24px); max-height: calc(100dvh - 24px); }
+[data-patchwork="playlist-curation"] {
+  min-width: 0;
+  max-height: calc(100dvh - 160px);
+  overflow-y: auto;
+}
+[data-patchwork="playlist-curation"] fieldset { min-width: 0; }
+[data-patchwork="playlist-curation"] .patchwork-curation-selection {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+[data-patchwork="playlist-curation"] .patchwork-curation-tracks {
+  max-height: min(35vh, 320px);
+  overflow: auto;
+}
+[data-patchwork="playlist-curation"] .patchwork-curation-track {
+  display: flex;
+  align-items: start;
+  gap: 8px;
+  padding: 4px;
+}
+[data-patchwork="playlist-curation"] .patchwork-curation-track > span {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+[data-patchwork="playlist-curation"] .patchwork-curation-track small { opacity: 0.8; }
+[data-patchwork="playlist-curation"] [data-part="result"] { overflow-wrap: anywhere; }
+/* Private initiative placeholders are hidden before insertion into ChatLog. */
+[data-patchwork-silent-initiative] { display: none !important; }
+
+.patchwork-spell-information {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3em;
+  margin-inline-start: 0.4em;
+  font-size: 0.8em;
+  vertical-align: middle;
+}
+.patchwork-spell-indicator { display: inline-flex; align-items: center; gap: 0.1em; cursor: help; }
+.patchwork-spell-indicator:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+.patchwork-spell-information[data-layout="native"],
+.patchwork-spell-information[data-layout="unified"] {
+  display: flex;
+  margin: 0.2em 0 0;
+  max-width: 100%;
+  min-width: 0;
+  line-height: 1.25;
+}
+#pf2e-hud-sidebar .details:has(> .extras > .patchwork-spell-information[data-layout="hud"]) {
+  min-width: 0;
+  grid-template-rows: auto auto;
+}
+#pf2e-hud-sidebar .details > .extras:has(> .patchwork-spell-information[data-layout="hud"]) {
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25em 0.6em;
+}
+.patchwork-spell-information[data-layout="hud"] {
+  flex: 1 1 8em;
+  min-width: 0;
+  margin: 0;
+  font-size: inherit;
+}
+.patchwork-spellcasting-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 4px 8px;
+  min-width: 0;
+}
+.patchwork-spellcasting-controls > button {
+  display: inline-flex;
+  flex-direction: row;
+  flex: 1 1 0;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3em;
+  width: 0;
+  min-width: 0;
+  height: 28px;
+  min-height: 28px;
+  max-height: 28px;
+  margin: 0;
+  padding: 0 0.4em;
+  font: inherit;
+  font-size: 0.85em;
+  line-height: 1;
+  white-space: nowrap;
+}
+.patchwork-spellcasting-controls > button > i { flex: 0 0 auto; }
+.patchwork-spellcasting-controls > button > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.patchwork-spellbook-lock[data-state="unlocked"] > i { color: #36a95d; }
+.patchwork-spellbook-lock[data-state="locked"] > i { color: #e25555; }
+.patchwork-spell-icons[data-state="enabled"] > i { color: #36a95d; }
+.patchwork-spell-icons[data-state="disabled"] > i { color: #e25555; }
+[data-patchwork-spellbook-protected] { opacity: 0.4; cursor: not-allowed; }
+
+[data-patchwork="session-hero-points-launch"] { margin: 4px 8px; width: calc(100% - 16px); }
+[data-patchwork="session-hero-points"] { min-width: 0; overflow-wrap: anywhere; }
+[data-patchwork="session-hero-points"] .patchwork-hero-character {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 6px 12px;
+  margin-block: 8px;
+}
+[data-patchwork="session-hero-points"] label { min-width: 0; }
+[data-patchwork="session-hero-points"] .patchwork-hero-character p { grid-column: 1 / -1; margin: 0; }
+[data-patchwork="session-hero-points"] input[type="text"],
+[data-patchwork="session-hero-points"] select,
+[data-patchwork="session-hero-points"] textarea { width: 100%; min-width: 0; }
+.patchwork-session-hero-points .form-footer { display: flex; flex-wrap: wrap; gap: 4px; }
+.patchwork-session-hero-points .form-footer button { flex: 1 1 140px; white-space: normal; }
+.patchwork-session-hero-points .form-footer button[hidden] { display: none; }
+.patchwork-hero-config { max-height: calc(100dvh - 24px); }
+
+/* Native TokenHUD owns palette activation. Only the owned menu is positioned. */
+[data-patchwork="movement-history-menu"] {
+  position: absolute; left: calc(100% + 8px); right: auto; top: 0; bottom: auto;
+  width: max-content; min-width: 0; box-sizing: border-box; overflow: auto;
+}
+[data-patchwork="movement-history-menu"] > button.palette-list-entry {
+  display: flex; align-items: center; gap: 0.5em; width: 100%; height: auto;
+  min-height: 30px; padding: 6px 8px; margin: 0; border: 0; border-radius: 0;
+  color: inherit; background: transparent; text-align: left; white-space: normal;
+}
+[data-patchwork="movement-history-menu"] > button:focus-visible { outline: 2px solid var(--color-warm-1, #dfb66c); outline-offset: -2px; }
+[data-patchwork="movement-history-menu"] > button:disabled { opacity: 0.5; cursor: not-allowed; }
+[data-patchwork="movement-history-menu"] i { flex: 0 0 1em; text-align: center; }
+.patchwork-hero-config .window-content {
+  display: flex; flex-direction: column; min-height: 0; max-height: calc(100dvh - 130px); overflow: hidden;
+}
+.patchwork-hero-config [data-patchwork="session-hero-points"] {
+  display: flex; flex-direction: column; min-height: 0; overflow-y: auto;
+}
+.patchwork-hero-config [data-part="roster"] {
+  flex: 1 1 auto; min-height: 80px; max-height: min(48dvh, 440px); overflow-y: auto;
+  overscroll-behavior: contain; scrollbar-gutter: stable;
+}
+.patchwork-hero-config .form-footer { flex: 0 0 auto; }
+.patchwork-hero-config details { flex: 0 0 auto; max-height: 20dvh; overflow: auto; }
+.patchwork-hero-reset [data-patchwork="session-hero-reset"] { overflow-wrap: anywhere; }
+.patchwork-hero-reset [data-part="review"] {
+  max-height: min(36dvh, 320px); overflow-y: auto;
+}
+@media (max-width: 520px) {
+  [data-patchwork="session-hero-points"] .patchwork-hero-character { grid-template-columns: minmax(0, 1fr); }
+}

@@ -1,0 +1,52 @@
+name: Validate stable source
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
+
+concurrency:
+  group: stable-validation-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Require stable repository identity
+        env:
+          REPOSITORY_ID: ${{ github.repository_id }}
+          SOURCE_REF: ${{ github.ref }}
+        run: |
+          test "$REPOSITORY_ID" = "1457423459"
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          fetch-depth: 1
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+      - name: Validate public source and regression tests
+        run: |
+          node tools/check.mjs
+          node --test tests/*.test.mjs
+          python -B -m unittest discover -s tests -p 'test_*.py'
+
+  build:
+    needs: validate
+    permissions:
+      contents: read
+    uses: ./.github/workflows/build-stable.yml

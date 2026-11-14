@@ -1,0 +1,271 @@
+{
+  "PATCHWORK": {
+    "DayNight": {
+      "World": {
+        "Name": "Automatic Day/Night Playlists",
+        "Hint": "Automatically switch between daytime and nighttime music based on a scene's darkness level. Configure the playlists in Scene Configuration → Miscellaneous → Audio."
+      },
+      "Title": "Patchwork — Day/Night Playlists",
+      "Enable": "Enable Automatic Day/Night Playlists",
+      "Day": "Daytime Playlist",
+      "Night": "Nighttime Playlist",
+      "Threshold": "Nighttime Darkness Threshold",
+      "None": "None",
+      "Missing": "Unavailable playlist (choose another or None)",
+      "Hint": "Nighttime begins when the scene's darkness reaches the selected threshold (default 0.50). Music switches when entering the scene or when the darkness crosses that threshold. Manually stopped music won't restart until the next transition.",
+      "NativeFade": "Uses existing playlist and track fade settings. Patchwork does not provide a separate crossfade.",
+      "Conflict": "Set the scene's normal Scene Playlist to None. Avoid assigning the same playlists through both Foundry and Patchwork to prevent competing playback."
+    },
+    "Settings": {
+      "Debug": {
+        "Name": "Log Startup Diagnostics",
+        "Hint": "Log Patchwork and Foundry version information to your browser's developer console when Foundry starts."
+      },
+      "HideGMTargetIndicators": {
+        "Name": "Hide GM Target Indicators",
+        "Hint": "Hide the GM's targeting indicators from players. Player indicators and targeting functionality remain unchanged. This only hides the indicators, not the underlying targeting data."
+      }
+    },
+    "Pause": {
+      "Name": "Pause Banner Position",
+      "Hint": "Choose where the pause banner appears on your screen. Default preserves Foundry's normal positioning.",
+      "default": "Default (Foundry)",
+      "top": "Top",
+      "center": "Center",
+      "bottom": "Bottom"
+    },
+    "Chat": {
+      "Layout": {
+        "Name": "Chat Toolbar Layout",
+        "Hint": "Customize the appearance of the chat toolbar. Default keeps the original layout, Compact reduces icon size and spacing, and Custom lets you adjust both manually."
+      },
+      "IconSize": {
+        "Name": "Chat Toolbar Icon Size (px)",
+        "Hint": "Adjust the size of icons in the chat toolbar, from 16 to 28 pixels. Only applies when using Custom layout."
+      },
+      "Spacing": {
+        "Name": "Chat Toolbar Spacing (px)",
+        "Hint": "Adjust the space between chat toolbar buttons, from 0 to 8 pixels. Only applies when using Custom layout."
+      },
+      "default": "Default (Foundry)",
+      "compact": "Compact",
+      "custom": "Custom"
+    },
+    "Curation": {
+      "Title": "Save Playing Tracks…",
+      "Tracks": "Playing native playlist tracks",
+      "SnapshotHint": "Select currently playing tracks to copy into a new or existing playlist. Close and reopen this window to refresh the list of available tracks.",
+      "All": "Select All",
+      "None": "Deselect All",
+      "Count": "{selected} selected of {total} tracks",
+      "Empty": "No eligible native playlist tracks are playing. Ambient sounds and transient effects are not included.",
+      "Destination": "Destination and copy options",
+      "DestinationKind": "Save to",
+      "New": "Create a new playlist",
+      "Existing": "Existing playlist",
+      "Choose": "Choose a destination…",
+      "Name": "New playlist name",
+      "Mode": "New playlist playback mode",
+      "Duplicates": "Duplicate handling",
+      "Skip": "Skip duplicate audio files",
+      "Allow": "Allow duplicates",
+      "DuplicateHint": "Skip prevents duplicate audio files within your selection or destination playlist. Choose Allow duplicates if you want multiple copies of the same audio.",
+      "PlaybackHint": "Tracks are copied without interrupting playback. Saved copies won't start automatically, and existing destination playlist settings remain unchanged.",
+      "Save": "Save",
+      "Cancel": "Cancel",
+      "Close": "Close",
+      "Saving": "Saving… Closing after Save cannot cancel a submitted document operation.",
+      "Result": "Tracks copied: {copied}; duplicate files skipped: {skipped}. Source tracks were left unchanged.",
+      "Partial": "Tracks copied: {copied}; duplicate files skipped: {skipped}; copies not confirmed: {failed}. Close and inspect the destination before saving again.",
+      "Errors": {
+        "permission": "You no longer have the required GM or document permission. No new operation was submitted.",
+        "selection": "Select at least one available snapshot track.",
+        "destination": "Choose an existing destination that is still available, or create a new playlist.",
+        "source": "A selected source no longer exists. Close and reopen to refresh the snapshot.",
+        "name": "Enter a non-empty playlist name without control characters.",
+        "mode": "Choose a native playlist playback mode.",
+        "metadata": "A selected track has unsupported or invalid playback metadata. Close and reopen to refresh.",
+        "busy": "A save is already in progress.",
+        "unavailable": "Playlist curation is unavailable. No document operation was submitted.",
+        "uncertain": "The save could not be confirmed. Some tracks or a destination may already exist. Close and inspect the destination before trying again; this dialog will not retry automatically."
+      }
+    },
+    "AboutFace": {
+      "Enable": {
+        "Name": "About Face Animation Improvements",
+        "Hint": "Improves horizontal token-flipping animations when using the About Face module, preventing repeated movement from restarting the animation. Requires About Face and libWrapper."
+      },
+      "Duration": {
+        "Name": "Flip Animation Duration (ms)",
+        "Hint": "Control how quickly tokens flip direction when using About Face. Adjustable from 0 to 2000 milliseconds (default 500). Set to 0 for an instant flip."
+      }
+    },
+    "Initiative": {
+      "Name": "Silent GM Initiative",
+      "Hint": "Choose which GM-rolled initiative results are visible to players. Hidden results have their chat cards, Dice So Nice 3D dice animations, and related chat notifications and sounds suppressed. Player-rolled initiative is unaffected. This does not change initiative values or turn order in the combat tracker.",
+      "Modes": {
+        "disabled": "Disabled",
+        "party": "Party Only",
+        "party-friendly": "Party + Friendly",
+        "party-friendly-neutral": "Party + Friendly + Neutral"
+      }
+    },
+    "Movement": {
+      "Enable": "Token Movement History",
+      "EnableHint": "Add Movement History controls to a token's right-click menu during combat. Reset traveled distance or undo recorded movement.",
+      "Access": "Movement History Access",
+      "AccessHint": "Choose who can use Movement History controls: GMs only, or GMs and players who have permission to move the token. This does not change existing token permissions.",
+      "GMOnly": "GM Only",
+      "Authorized": "GM and Authorized Players",
+      "Title": "Movement History",
+      "Reset": "Reset Traveled Distance",
+      "ResetHint": "Clear the token's recorded movement distance without moving it. New movement starts from its current position.",
+      "Undo": "Undo Recorded Movement",
+      "UndoHint": "Return the token to where its recorded movement began. Undoes the entire recorded movement, not just the last step.",
+      "Results": {
+        "reset": "Recorded traveled distance reset.",
+        "undone": "Recorded movement undone.",
+        "empty": "No recorded movement is available."
+      },
+      "Errors": {
+        "disabled": "Token Movement Reset is disabled or unavailable.",
+        "policy": "Patchwork movement actions are restricted to GMs.",
+        "permission": "Native token update, control or movement permission is unavailable.",
+        "token": "The token is missing, is a preview, or is no longer on the active scene.",
+        "moving": "Finish or stop the token's current movement before changing its recorded history.",
+        "busy": "A movement-history action for this token is already pending on this client.",
+        "stale": "The HUD token, scene or combat eligibility changed. Reopen the HUD before another action.",
+        "unsupported": "The native movement-history or HUD contract is unavailable.",
+        "native": "Foundry did not confirm the operation. Inspect this token and its history before another attempt; no automatic retry was made.",
+        "uncertain": "The native request may have completed. Inspect the token and its history before another action; no automatic retry was made."
+      }
+    },
+    "HeroPoints": {
+      "Enable": "Session Hero Points — Enable Resets",
+      "EnableHint": "Allow the GM to reset the party's Hero Points to configured starting amounts. Resets happen only when the GM confirms them, never automatically.",
+      "Default": "Session Hero Points — Default Amount",
+      "DefaultHint": "Set how many Hero Points included characters receive when resetting, from 0 to 3. Individual character overrides take priority.",
+      "Deck": "Discard Hero Action Cards on Reset",
+      "DeckChoice": "Discard Hero Action Cards on Reset",
+      "DeckHint": "Discard existing Hero Action cards during a reset. Players can draw new cards using PF2e Toolbelt.",
+      "Title": "Session Hero Points",
+      "Open": "Session Hero Points — Configure…",
+      "MenuHint": "Choose which characters receive Hero Points, set individual starting amounts, and configure Hero Action card discarding.",
+      "PolicyHint": "Choose which party members receive Hero Points when resetting and set their starting amounts. Characters are included by default, while companions must be included manually.",
+      "MacroHint": "Copy this macro if you prefer resetting Hero Points from your Macro Hotbar. Use only one reset method per session.",
+      "UseDefault": "Use Default",
+      "Override": "Starting Hero Points",
+      "Include": "Include in Reset",
+      "NoCharacters": "No eligible characters were found in the current party.",
+      "NoParty": "No active PF2e party is available.",
+      "Disabled": "Enable Session Hero Point Resets in Patchwork settings to run a reset. You can still configure characters here.",
+      "Save": "Save Settings",
+      "Saved": "Settings saved. No Hero Points or cards were changed.",
+      "Refresh": "Refresh Party",
+      "Reset": "Reset Session Hero Points",
+      "Cancel": "Cancel",
+      "ConfirmTitle": "Confirm Hero Point Reset",
+      "ConfirmHint": "Give these Hero Point amounts to the included characters?",
+      "Result": "Hero Points updated: {updated}; already correct: {unchanged}; update failed/stopped: {failed}; excluded/ineligible: {excluded}.",
+      "Failures": "Review these characters",
+      "Uncertain": "Some operations did not finish reliably. Review character resources and PF2e Toolbelt hands before another reset.",
+      "LaunchMacro": "Optional Reset Macro",
+      "DeckConfirm": "Also discard included characters' existing PF2e Toolbelt Hero Action cards after successful or already-correct Hero Point resets. No new cards will be drawn. Players can draw manually using PF2e Toolbelt. Its normal discard messages may appear.",
+      "DeckUnavailable": "PF2e Toolbelt's supported discard operation is unavailable. Only Hero Points will reset; existing hands will be left alone.",
+      "DeckResult": "Hero Action hands cleared: {completed}; already empty: {empty}; skipped, failed or uncertain: {other}.",
+      "DeckManualReady": "Players can now draw new cards using PF2e Toolbelt's normal controls.",
+      "Errors": {
+        "authority": "Reset unavailable: enable the feature and use the elected active GM. No additional actor changes will be submitted.",
+        "configuration": "Invalid session Hero Point configuration. Check the default amount and overrides.",
+        "history": "Reset coordination is unavailable or malformed. No reset will be started.",
+        "selection": "Include at least one eligible active-party character in the saved settings.",
+        "stale": "The party, configuration or another reset changed. Refresh and review again before applying.",
+        "confirmation": "A confirmed preview is required.",
+        "save": "Unable to save the configuration. Check permissions and refresh before trying again.",
+        "party": "This is not the active PF2e party. Open the active Party Sheet or use module settings.",
+        "uncertain": "The operation did not finish reliably. Review character resources and PF2e Toolbelt hands before another reset.",
+        "busy": "Another reset is running or was interrupted. Let it finish, or review an interrupted reset only after other reset windows have stopped."
+      },
+      "Reasons": {
+        "not-character": "Excluded: not a PC character.",
+        "not-world": "Excluded: not a current world character.",
+        "not-party": "Excluded: not in the active party.",
+        "unknown-character": "Excluded: character traits are unavailable.",
+        "companion": "Companion: unchecked by default. Include explicitly if this character uses Hero Points.",
+        "excluded": "Excluded by GM configuration.",
+        "no-hero-points": "Excluded: no valid native Hero Point resource.",
+        "permission": "Excluded: actor update permission is unavailable."
+      },
+      "Points": "Hero Points",
+      "Recover": "Review Interrupted Reset…",
+      "RecoveryHint": "Only continue after all other reset windows have stopped. Check character resources and PF2e Toolbelt hands first: already-submitted requests may still finish. Continuing clears the interrupted-operation guard only; it does not reset points or cards. You must separately review and confirm any new reset.",
+      "Recovered": "The interrupted reset guard was cleared. Review resources and hands before confirming another reset.",
+      "PreviousWarning": "A previous reset was partial or uncertain. Inspect resources and PF2e Toolbelt hands before confirming another reset; submitted document requests may still finish.",
+      "ResetHint": "Review and confirm a reset using the current saved party configuration.",
+      "ConfigReady": "Settings only. Use the Party Sheet button or optional macro to reset Hero Points.",
+      "Unsaved": "Unsaved changes. Select Save Settings to keep them.",
+      "ConfigConflict": "Saved settings changed elsewhere. Close and reopen to load them, or keep this window open to review your unsaved edits.",
+      "CharacterList": "Party characters — scrollable configuration list",
+      "Processing": "Applying the confirmed reset… Close this window to stop remaining work; submitted operations cannot be recalled.",
+      "Close": "Close",
+      "DeckReasons": {
+        "provider-missing": "PF2e Toolbelt is missing or inactive; cards were not changed.",
+        "provider-contract": "PF2e Toolbelt does not expose the supported discard API; cards were not changed.",
+        "provider-disabled": "PF2e Toolbelt Hero Actions are disabled; cards were not changed.",
+        "hand": "The current PF2e Toolbelt hand could not be read safely.",
+        "hand-changed": "The hand changed since confirmation; no discard was submitted.",
+        "authority": "Reset authority changed; no discard was submitted.",
+        "previous-uncertain": "Card discards stopped after an earlier failed or uncertain operation; inspect existing hands.",
+        "discard-error": "PF2e Toolbelt reported a discard error. Inspect the hand, including after reload; the document update may have succeeded. No retry was submitted.",
+        "discard-incomplete": "PF2e Toolbelt returned but cards remain in the hand. No retry was submitted.",
+        "hand-unreadable": "The discard was submitted but its resulting hand could not be read. Inspect it before another reset."
+      },
+      "DiscardObservation": "Observed hand: {before} before, {after} after; {removed} previous card(s) no longer present. An observation after an error does not confirm persistence.",
+      "Unknown": "unknown"
+    },
+    "Spells": {
+      "Name": "Spellcasting Information Icons",
+      "Enabled": "Spellcasting Icons Enabled",
+      "Disabled": "Spellcasting Icons Disabled",
+      "Controls": "Spellcasting controls",
+      "ToggleHint": "Show or hide this character's spell information on supported open interfaces for this client only. Other characters, clients and spellbook locks are unchanged.",
+      "SaveError": "Unable to save spellcasting icon preference. Try again or reopen the sheet.",
+      "Hint": "Show compact spell attack, save type/basic save, area, explicit self/touch/numeric range, duration/sustain and incapacitation information on supported native, Unified Spellbook and HUD spell sidebar rows for this client. Off by default. Unknown classifications are omitted; unselected casting modes show an options indicator.",
+      "Attack": "Spell attack against AC",
+      "Save": "Saving throw",
+      "BasicSave": "Basic save",
+      "Fortitude": "Fortitude",
+      "Reflex": "Reflex",
+      "Will": "Will",
+      "Burst": "Burst",
+      "Cone": "Cone",
+      "Line": "Line",
+      "Emanation": "Emanation",
+      "Feet": "ft",
+      "radius": "radius",
+      "length": "length",
+      "Variants": "Multiple casting options — open spell to choose",
+      "FortitudeShort": "Fort",
+      "ReflexShort": "Ref",
+      "WillShort": "Will",
+      "SelfShort": "Self",
+      "Self": "Targets only the caster",
+      "TouchShort": "Touch",
+      "Touch": "Range: touch",
+      "Range": "Range",
+      "Miles": "mi",
+      "SustainShort": "Sust",
+      "Sustained": "Sustained duration",
+      "Duration": "Duration",
+      "IncapacitationShort": "Inc",
+      "Incapacitation": "Incapacitation trait — check target level"
+    },
+    "Spellbook": {
+      "LockedHint": "Manual spell editing and unpreparation are locked. Casting, preparation additions and spell-slot use remain available.",
+      "UnlockedHint": "Protect this character's spellbook against manual editing, deletion and unpreparation.",
+      "SaveError": "Unable to save spellbook lock. Reopen the sheet and check permissions.",
+      "Locked": "Spellcasting Locked",
+      "Unlocked": "Spellcasting Unlocked"
+    }
+  }
+}

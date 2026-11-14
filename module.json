@@ -1,0 +1,41 @@
+{
+  "id": "pf2e-patchwork-qol",
+  "title": "PF2e Patchwork",
+  "description": "Small, independently configurable quality-of-life features for Pathfinder 2e, including GM target indicator suppression, scene-based day/night playlists, client pause-banner positioning, compact chat toolbar controls, GM playlist curation, optional About Face animation improvements, Silent GM Initiative, scoped spellcasting information icons and spellbook UI locking, GM-confirmed session Hero Point resets, and native token movement history controls.",
+  "version": "1.0.0",
+  "authors": [
+    {
+      "name": "SoundSherpa"
+    }
+  ],
+  "compatibility": {
+    "minimum": "14",
+    "maximum": "14"
+  },
+  "relationships": {
+    "systems": [
+      {
+        "id": "pf2e",
+        "type": "system"
+      }
+    ]
+  },
+  "esmodules": [
+    "scripts/main.mjs"
+  ],
+  "styles": [
+    "styles/patchwork.css"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "url": "https://github.com/SoundSherpa/pf2e-patchwork",
+  "manifest": "https://github.com/SoundSherpa/pf2e-patchwork/releases/latest/download/module.json",
+  "download": "https://github.com/SoundSherpa/pf2e-patchwork/releases/download/v1.0.0/pf2e-patchwork-qol-v1.0.0.zip",
+  "license": "LICENSE",
+  "bugs": "https://github.com/SoundSherpa/pf2e-patchwork/issues"
+}

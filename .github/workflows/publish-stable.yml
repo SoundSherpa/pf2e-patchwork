@@ -33,7 +33,7 @@ concurrency:
 
 jobs:
   approval:
-    if: github.actor == 'SoundSherpa' && github.repository_id == '1457423459' && github.ref == 'refs/heads/main' && inputs.publish_release
+    if: github.event_name == 'workflow_dispatch' && github.actor == 'SoundSherpa' && github.triggering_actor == 'SoundSherpa' && github.repository_id == '1457423459' && github.ref == 'refs/heads/main' && inputs.publish_release
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -65,14 +65,14 @@ jobs:
 
   build:
     needs: approval
-    if: github.actor == 'SoundSherpa' && github.repository_id == '1457423459' && github.ref == 'refs/heads/main' && inputs.publish_release
+    if: github.event_name == 'workflow_dispatch' && github.actor == 'SoundSherpa' && github.triggering_actor == 'SoundSherpa' && github.repository_id == '1457423459' && github.ref == 'refs/heads/main' && inputs.publish_release
     permissions:
       contents: read
     uses: ./.github/workflows/build-stable.yml
 
   publish:
     needs: build
-    if: github.actor == 'SoundSherpa' && github.repository_id == '1457423459' && github.ref == 'refs/heads/main' && inputs.publish_release
+    if: github.event_name == 'workflow_dispatch' && github.actor == 'SoundSherpa' && github.triggering_actor == 'SoundSherpa' && github.repository_id == '1457423459' && github.ref == 'refs/heads/main' && inputs.publish_release
     runs-on: ubuntu-latest
     timeout-minutes: 15
     environment: stable-release
@@ -114,7 +114,7 @@ jobs:
           PYTHON
           cd dist/release
           sha256sum --check *.zip.sha256
-      - name: Upload draft assets, read back bytes, then publish
+      - name: Create and verify tag, verify draft assets, then publish
         uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b
         with:
           retries: 0

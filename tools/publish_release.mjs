@@ -16,11 +16,14 @@ export function releaseNotes(root, version) {
   return section.trim()+"\n";
 }
 
-export function validateApproval(context, version, notes) {
+export function validateApproval(context, version, notes, triggeringActor=process.env.GITHUB_TRIGGERING_ACTOR) {
   const inputs = context.payload?.inputs ?? {};
   require(context.repo?.owner === "SoundSherpa" && context.repo?.repo === "pf2e-patchwork"
     && String(context.payload?.repository?.id) === String(REPOSITORY_ID), "Wrong repository identity");
   require(context.actor === "SoundSherpa" && context.payload?.sender?.id === OWNER_ID, "Owner dispatch required");
+  // @actions/github's Context retains the original actor on reruns. The runner
+  // supplies the initiator separately; missing identity must fail closed.
+  require(triggeringActor === "SoundSherpa", "Owner workflow initiator required");
   require(context.eventName === "workflow_dispatch" && context.ref === "refs/heads/main", "Manual main dispatch required");
   require(inputs.publish_release === true || inputs.publish_release === "true", "Explicit publication approval required");
   require(/^[a-f0-9]{40}$/.test(inputs.approved_commit ?? "") && inputs.approved_commit === context.sha,
@@ -30,11 +33,11 @@ export function validateApproval(context, version, notes) {
     "Exact release notes approval hash required");
 }
 
-export function releasePlan({context, root=process.cwd()}) {
+export function releasePlan({context, root=process.cwd(), triggeringActor=process.env.GITHUB_TRIGGERING_ACTOR}) {
   const source=readFileSync(join(root,"module.json"));
   const manifest=JSON.parse(source);
   const notes=releaseNotes(root,manifest.version);
-  validateApproval(context,manifest.version,notes);
+  validateApproval(context,manifest.version,notes,triggeringActor);
   require(manifest.id === MODULE_ID && manifest.license === "LICENSE", "Manifest identity/license mismatch");
   const installer=`${MODULE_ID}-v${manifest.version}.zip`;
   require(manifest.url === BASE && manifest.manifest === `${BASE}/releases/latest/download/module.json`
@@ -64,8 +67,8 @@ function binary(data) {
   throw new Error("Asset download did not return binary bytes");
 }
 
-export async function publishRelease({github,context,root=process.cwd()}) {
-  const plan=releasePlan({context,root});
+export async function publishRelease({github,context,root=process.cwd(),triggeringActor=process.env.GITHUB_TRIGGERING_ACTOR}) {
+  const plan=releasePlan({context,root,triggeringActor});
   const directory=join(root,"dist","release");
   const zip=readFileSync(join(directory,plan.installer));
   const checksum=readFileSync(join(directory,plan.installer+".sha256"));
@@ -78,6 +81,16 @@ export async function publishRelease({github,context,root=process.cwd()}) {
   await absent(()=>github.rest.repos.getReleaseByTag({...repo,tag:plan.tag}),"Release already exists");
   const releases=await github.paginate(github.rest.repos.listReleases,{...repo,per_page:100});
   require(!releases.some(r=>r.tag_name === plan.tag), "Existing release or draft must not be overwritten");
+  async function verifyTag() {
+    const {data:tag}=await github.rest.git.getRef({...repo,ref:`tags/${plan.tag}`});
+    require(tag.object.type === "commit" && tag.object.sha === context.sha, "Release tag source mismatch");
+  }
+  // createRef fails atomically if another writer won the tag name. Never adopt,
+  // move or overwrite an existing ref, even when it has the approved SHA.
+  // Any failed/uncertain write (including tag creation) requires inspection.
+  // Do not retry or automatically delete tags, drafts or assets.
+  await github.rest.git.createRef({...repo,ref:`refs/tags/${plan.tag}`,sha:context.sha});
+  await verifyTag();
   const body=`${plan.notes.trim()}\n\nSource commit: ${context.sha}\n`;
   const {data:draft}=await github.rest.repos.createRelease({...repo,tag_name:plan.tag,target_commitish:context.sha,
     name:`PF2e Patchwork ${plan.tag}`,body,draft:true,prerelease:false,make_latest:"false"});
@@ -110,9 +123,9 @@ export async function publishRelease({github,context,root=process.cwd()}) {
   require(checked.draft === true && checked.tag_name === plan.tag && checked.target_commitish === context.sha
     && checked.body === body && checked.prerelease === false, "Draft changed before publication");
   await validateRemote({github,context});
+  await verifyTag();
   await github.rest.repos.updateRelease({...repo,release_id:draft.id,draft:false,prerelease:false,make_latest:"true"});
-  const {data:tag}=await github.rest.git.getRef({...repo,ref:`tags/${plan.tag}`});
-  require(tag.object.type === "commit" && tag.object.sha === context.sha, "Published tag source mismatch");
+  await verifyTag();
   const {data:release}=await github.rest.repos.getReleaseByTag({...repo,tag:plan.tag});
   require(release.id === draft.id && release.draft === false && release.prerelease === false
     && release.target_commitish === context.sha && release.body === body, "Published release metadata mismatch");

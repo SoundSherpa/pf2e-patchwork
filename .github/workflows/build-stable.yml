@@ -16,7 +16,7 @@ env:
 
 jobs:
   build:
-    if: github.repository_id == '1457423459'
+    if: github.event_name == 'workflow_dispatch' && github.repository_id == '1457423459'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     outputs:
@@ -46,7 +46,7 @@ jobs:
           unzip -t *.zip
       - name: Upload immutable validated build
         id: artifact
-        if: github.event_name != 'pull_request'
+        if: github.event_name == 'workflow_dispatch'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: stable-build-${{ github.sha }}

@@ -44,9 +44,3 @@ jobs:
           node tools/check.mjs
           node --test tests/*.test.mjs
           python -B -m unittest discover -s tests -p 'test_*.py'
-
-  build:
-    needs: validate
-    permissions:
-      contents: read
-    uses: ./.github/workflows/build-stable.yml
